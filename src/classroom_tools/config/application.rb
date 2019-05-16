@@ -31,5 +31,20 @@ module ClassroomTools
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        # set origins to your client urls
+        # origins 'localhost:3000', 'localhost:5050', 'localhost:9999', 'localhost:8080'
+        origins 'localhost:3001'
+        resource(
+          "/api/*", # this means that only routes that begin with /api/ are accessible
+          headers: :any,
+          credentials: true,
+          methods: [:get, :new, :post, :delete, :patch, :put, :options]
+        )
+      end
+    end
+
   end
 end
