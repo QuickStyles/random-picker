@@ -14,19 +14,32 @@ export default class SchoolsPage extends React.Component {
       return res.json();
     }).then((res) => {
       console.log(res)
-      this.setState({
-        schools: res.schools,
-        isLoading:false
-      })
+      setTimeout(() => {
+        this.setState({
+          schools: res.schools,
+          isLoading: false
+        })
+      }, 2000)
     })
   }
 
   render() {
+    if(this.state.isLoading) {
+      return(
+        <div>
+          This is the first render... 
+          Once the component mounts our componenetDidMount() method will fire
+          Inside that method we are calling this.setState() with new data
+          which will trigger a re-render of the component
+        </div>
+      )
+    }
     return(
       <main className="school-page">
-        {this.state.schools.map((school) => {
+
+        {this.state.schools.map((school, index) => {
           return(
-            <div style={styles.school.container}>
+            <div key={index} style={styles.school.container}>
               <div style={styles.school.header}>
                 {school.name}
               </div>
